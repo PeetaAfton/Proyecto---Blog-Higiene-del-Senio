@@ -24,15 +24,14 @@ En este proyecto se aplican los conocimientos de diseño de un sitio web para cr
 >[!info] Responde a la pregunta de ¿Qué es la HS?
 >[!important] Tambien debe debe de mencionar los **peligros** de no mantener una buena HS para que generar en el usuario un gancho y un impacto que lo mantenga atento a lo que dice el blog
 ## Recomendaciones
->[!info] Responde a la pregunta de ¿Cómo mantener una buena salud de HS?
+>[!note] Responde a la pregunta de ¿Cómo mantener una buena salud de HS?
 
 ## Literatura recomendad
->[!info] Responde a la curiosidad surgida en el usuario de queres conocer mas
+>[!note] Responde a la curiosidad surgida en el usuario de queres conocer mas
 Tambien puede tener links a videos o historias relacionadas (experimentos rusos de la privación del sueño) 
 
 ## Datos Curiosos
 - Persona que aguanto mas tiempo sin dormir
 - Prohibición en el libro de record Guines
 
-## About me
-Info sobre l@ autor@
+
