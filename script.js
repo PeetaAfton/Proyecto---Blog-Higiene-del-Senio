@@ -72,3 +72,37 @@
 
   llenarFila('fila-datos', datosCuriosos, 'dato');
   llenarFila('fila-recursos', recursos, 'recurso');
+
+  // -------- Nav: al hacer clic, mover el scroll Y el foco a la sección --------
+  const enlacesNav = document.querySelectorAll('.menu a[href^="#"]');
+  enlacesNav.forEach(link=>{
+    link.addEventListener('click', (e)=>{
+      const id = link.getAttribute('href').slice(1);
+      const destino = document.getElementById(id);
+      if(!destino) return;
+      e.preventDefault();
+      destino.scrollIntoView({behavior:'smooth', block:'start'});
+
+      const moverFoco = ()=> destino.focus({preventScroll:true});
+      if('onscrollend' in window){
+        window.addEventListener('scrollend', moverFoco, {once:true});
+      } else {
+        // navegadores sin soporte de 'scrollend': se estima cuando termina el scroll suave
+        setTimeout(moverFoco, 700);
+      }
+    });
+  });
+
+  // -------- Nav: resaltar la sección visible mientras se hace scroll --------
+  const seccionesConId = document.querySelectorAll('section[id]');
+  const navObserver = new IntersectionObserver((entradas)=>{
+    entradas.forEach(entrada=>{
+      if(entrada.isIntersecting){
+        const id = entrada.target.getAttribute('id');
+        enlacesNav.forEach(a=>{
+          a.classList.toggle('activo', a.getAttribute('href') === '#'+id);
+        });
+      }
+    });
+  }, { rootMargin: '-45% 0px -45% 0px' });
+  seccionesConId.forEach(sec=>navObserver.observe(sec));
