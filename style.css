@@ -168,50 +168,76 @@ html{scroll-behavior:smooth;}
 
   /* ---------- CONTENEDOR GENERAL ---------- */
 
-  
-  .contenedor .intro {
-    max-width: 45% ;
-    display: flex;
-    justify-content: flex-start;
+  .fila-imagen{
+    display:flex;
+    align-items:stretch;
+    gap: 2rem;
     margin: 3rem 1.5rem 6rem 1.5rem;
-    padding: 5rem 3rem;  
-
-
+  }
+  @media (max-width: 780px){
+    .fila-imagen{ flex-direction:column; margin: 2rem 1.5rem 3.5rem 1.5rem; gap:1.2rem; }
   }
 
-  .intro{
-    background: var(--azul-profundo);     
-    border-radius: 16px;     
-    padding: 5em;          
-    border:1px solid var(--crepusculo); 
+  /* La imagen ocupa la misma columna que el texto y se recorta (cover) para
+     igualar siempre la altura de su pareja, sin dejar espacio en blanco */
+  .fila-imagen img{
+    flex: 1 1 0;
+    min-width: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    object-fit: cover;
+  }
+  @media (max-width: 780px){ .fila-imagen img{ min-height: 220px; } }
+
+  .intro,
+  .intro-grid{
+    flex: 1 1 0;
+    display: flex;
+    background: var(--azul-profundo);
+    border-radius: 16px;
+    padding: 4rem 3rem;
+    border:1px solid var(--crepusculo);
     box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    margin: 0;
   }
-  @media (max-width: 780px){ .intro{ grid-template-columns:1fr; gap:2.2rem;} }
+  .intro{ justify-content: flex-start; align-items:center; }
+  .intro-grid{ justify-content: flex-end; align-items:center; }
 
   .intro h2{ font-size: clamp(1.7rem, 3.4vw, 2.4rem); color:var(--espuma); margin-bottom:1.1rem;}
   .intro p{ color: rgba(237, 239, 241, 0.78); line-height:1.75; font-size:1.02rem; }
   .intro p + p{ margin-top:1rem; }
-  
+
   /* ---------- INTRO GRID ---------- */
-
-
-  .intro-grid{
-    background: var(--azul-profundo);     
-    border-radius: 16px;     
-    padding: 5em;          
-    border:1px solid var(--crepusculo); 
-    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
-    max-width: 45% ;
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    margin: 3rem 1.5rem 6rem auto;
-    padding: 5rem 3rem;  
-  }
-
 
   .intro-grid h2{ font-size: clamp(1.7rem, 3.4vw, 2.4rem); color:var(--espuma); margin-bottom:1.1rem;text-align:right;}
   .intro-grid p{ color: rgba(237, 239, 241, 0.78); line-height:1.75; font-size:1.02rem; text-align:right;}
+
+  /* ---------- ESPACIOS PARA IMÁGENES PROPIAS ---------- */
+  .imagen-espacio{
+    flex: 1 1 0;
+    min-height: 320px;
+    border-radius: 16px;
+    border: 2px dashed rgba(143,211,238,.35);
+    background: rgba(143,211,238,.04);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:.9rem;
+    text-align:center;
+    padding: 2rem;
+    color: rgba(238,246,251,.5);
+  }
+  @media (max-width: 780px){ .imagen-espacio{ min-height:220px; } }
+  .imagen-espacio svg{ width:38px; height:38px; color: var(--celeste); opacity:.6; }
+  .imagen-espacio span{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.72rem;
+    letter-spacing:.05em;
+    max-width: 24ch;
+    line-height:1.5;
+  }
 
   /* ---------- PELIGROS: cuadrícula bento dinámica ---------- */
   .peligros-lista{
@@ -232,6 +258,63 @@ html{scroll-behavior:smooth;}
   }
   @media (max-width: 980px){ .riesgos-grid{ grid-template-columns: repeat(2,1fr); } }
   @media (max-width: 560px){ .riesgos-grid{ grid-template-columns: 1fr; } }
+
+  /* espacio de imagen dentro de la cuadrícula bento de riesgos */
+  .riesgo-imagen{
+    grid-column: span 3;
+    min-height: 220px;
+    border-radius: 18px;
+    border: 2px dashed rgba(207,159,95,.4);
+    background: rgba(207,159,95,.05);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:.8rem;
+    text-align:center;
+    padding: 1.5rem;
+    color: rgba(238,246,251,.5);
+  }
+  .riesgo-imagen.span-2{ grid-column: span 2; }
+  .riesgo-imagen.span-4{ grid-column: span 4; }
+  @media (max-width: 980px){ .riesgo-imagen, .riesgo-imagen.span-2, .riesgo-imagen.span-4{ grid-column: span 2; } }
+  @media (max-width: 560px){ .riesgo-imagen, .riesgo-imagen.span-2, .riesgo-imagen.span-4{ grid-column: span 1; } }
+  .riesgo-imagen svg{ width:32px; height:32px; color: var(--hilo); opacity:.7; }
+  .riesgo-imagen span{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.7rem;
+    letter-spacing:.05em;
+    max-width: 22ch;
+    line-height:1.5;
+  }
+
+  /* Imágenes reales dentro de la cuadrícula bento: mismo span que una
+     riesgo-card y recorte "cover" para llenar siempre la celda, sin huecos */
+  .riesgo-imagen-real{
+    grid-column: span 3;
+    border-radius: 18px;
+    overflow: hidden;
+    height: 340px;
+  }
+  .riesgo-imagen-real img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 18px;
+  }
+  @media (max-width: 560px){ .riesgo-imagen-real{ height: 260px; } }
+  @media (max-width: 980px){ .riesgo-imagen-real{ grid-column: span 2; } }
+  @media (max-width: 560px){ .riesgo-imagen-real{ grid-column: span 1; } }
+
+  /* Tarjeta 10: al quedar sola en su fila de 6 columnas, se centra en vez
+     de pegarse a la izquierda */
+  .riesgo-card--centro{
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: min(100%, 520px);
+  }
+  @media (max-width: 980px){ .riesgo-card--centro{ width: 100%; } }
 
   .riesgo-card{
     grid-column: span 3;
@@ -300,7 +383,8 @@ html{scroll-behavior:smooth;}
   }
 
   /* entrada escalonada: cada tarjeta aparece un poco después que la anterior */
-  .riesgo-card.reveal{ transition-delay: calc(var(--i, 0) * 70ms); }
+  .riesgo-card.reveal,
+  .riesgo-imagen.reveal{ transition-delay: calc(var(--i, 0) * 70ms); }
 
   /* ---------- ABOUT ---------- */
   .about-box{
@@ -420,3 +504,9 @@ html{scroll-behavior:smooth;}
   }
 
   :focus-visible{ outline: 2px solid var(--celeste); outline-offset:3px; }
+
+img{
+  border-radius: 16px;   /* ajusta el valor a gusto */
+  max-width: 100%;
+  display: block;
+}
