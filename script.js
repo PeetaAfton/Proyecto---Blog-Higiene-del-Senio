@@ -46,7 +46,7 @@
     "Los adolescentes tienen un reloj circadiano naturalmente retrasado: no es 'pereza' que les cueste dormir temprano, es biología."
   ];
   const recursos = [
-    "Libro: 'Por qué dormimos', de Matthew Walker — divulgación accesible sobre neurociencia del sueño.",
+    "Libro: 'Por qué dormimos', de Matthew Walker, divulgación accesible sobre neurociencia del sueño.",
     "Busca documentales o charlas TED sobre privación del sueño para complementar esta sección con video.",
     "Sleep Foundation publica guías breves y actualizadas sobre higiene del sueño en distintos grupos de edad.",
     "Una meditación guiada corta antes de dormir puede sustituir el hábito de revisar el celular en la cama.",
@@ -106,3 +106,41 @@
     });
   }, { rootMargin: '-45% 0px -45% 0px' });
   seccionesConId.forEach(sec=>navObserver.observe(sec));
+
+// -------- Videos en bucle de vaivén: adelante → reversa → adelante... --------
+function initVideosVaiven(){
+  const videos = document.querySelectorAll('.video-vaiven');
+
+  videos.forEach(video=>{
+    video.muted = true;
+    video.loop = false;
+
+    let ultimoTiempo = null;
+
+    function reproducirReversa(timestamp){
+      if(ultimoTiempo === null) ultimoTiempo = timestamp;
+      const delta = (timestamp - ultimoTiempo) / 1000; // segundos transcurridos
+      ultimoTiempo = timestamp;
+
+      video.currentTime = Math.max(0, video.currentTime - delta);
+
+      if(video.currentTime <= 0.03){
+        // la reversa llegó al inicio: reanuda hacia adelante
+        ultimoTiempo = null;
+        video.currentTime = 0;
+        video.play().catch(()=>{});
+        return;
+      }
+      requestAnimationFrame(reproducirReversa);
+    }
+
+    video.addEventListener('ended', ()=>{
+      ultimoTiempo = null;
+      requestAnimationFrame(reproducirReversa);
+    });
+
+    video.play().catch(()=>{});
+  });
+}
+
+initVideosVaiven();

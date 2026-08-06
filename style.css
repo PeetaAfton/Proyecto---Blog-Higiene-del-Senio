@@ -239,6 +239,22 @@ html{scroll-behavior:smooth;}
     line-height:1.5;
   }
 
+  .imagen-espacio video,
+.riesgo-imagen video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+/* si el contenedor trae un video real, quita el padding/borde punteado de placeholder */
+.imagen-espacio:has(video),
+.riesgo-imagen:has(video){
+  padding:0;
+  border-style:solid;
+  background:transparent;
+  overflow:hidden;
+}
   /* ---------- PELIGROS: cuadrícula bento dinámica ---------- */
   .peligros-lista{
     max-width: 100%;
